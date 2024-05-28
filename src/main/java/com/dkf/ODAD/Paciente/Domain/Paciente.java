@@ -15,10 +15,10 @@ import java.util.List;
 @Data
 public class Paciente extends Usuario {
 
-    @Column(nullable = false)
+    @Column
     private Integer edad;
 
-    @Column(nullable = false)
+    @Column
     private String sexo;
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)

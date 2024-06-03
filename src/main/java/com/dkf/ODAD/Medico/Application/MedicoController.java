@@ -3,26 +3,71 @@ package com.dkf.ODAD.Medico.Application;
 
 import com.dkf.ODAD.Medico.Service.MedicoService;
 import com.dkf.ODAD.Medico.dto.MedicoResponseDTO;
+import com.dkf.ODAD.Medico.dto.NewMedicoInfoDTO;
+import com.dkf.ODAD.Ruta.Domain.Ruta;
+import com.dkf.ODAD.Visita.Domain.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.AccessDeniedException;
+import java.util.List;
 
 
 @RestController
-@RequestMapping("/Medico")
+@RequestMapping("/medico")
 public class MedicoController {
 
     private final MedicoService medicoService;
 
     @Autowired
-    private MedicoController(MedicoService medicoService) {this.medicoService = medicoService;}
+    public MedicoController(MedicoService medicoService) {this.medicoService = medicoService;}
 
-    @GetMapping("/getMedicos")
+    @PreAuthorize("hasRole('ROLE_MEDICO')")
+    @GetMapping("/{id}")
     public ResponseEntity<MedicoResponseDTO> getMedico(@PathVariable Long id) {
         return ResponseEntity.ok(medicoService.getMedicoInfo(id));
     };
 
+    @PreAuthorize("hasRole('ROLE_MEDICO')")
+    @GetMapping("/me")
+    public ResponseEntity<MedicoResponseDTO> getMedico() {
+        return ResponseEntity.ok(medicoService.getMedicoOwnInfo());
+    };
+
+    @PreAuthorize("hasRole('ROLE_MEDICO')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDriver(@PathVariable Long id) throws AccessDeniedException {
+        medicoService.deleteMedico(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasRole('ROLE_MEDICO')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateMedicoInfo(@PathVariable Long id, @RequestBody NewMedicoInfoDTO medicoInfoDTO) throws AccessDeniedException {
+        medicoService.updateMedicoInfo(id, medicoInfoDTO);
+        return ResponseEntity.ok("Driver info updated");
+    }
+
+
+    @GetMapping("/{Id}/visitas")
+    public List<Visita> getVisitas(@PathVariable Long Id) {
+        return medicoService.getVisitas(Id);
+    }
+
+    @PostMapping("/{Id}/visitas")
+    public Visita addVisita(@PathVariable Long Id, @RequestBody Visita visita) throws AccessDeniedException {
+        return medicoService.addVisita(Id, visita);
+    }
+
+    @GetMapping("/{Id}/rutas")
+    public List<Ruta> getRutas(@PathVariable Long Id) {
+        return medicoService.getRutas(Id);
+    }
+
+    @PostMapping("/{Id}/rutas")
+    public Ruta addRuta(@PathVariable Long Id, @RequestBody Ruta ruta) {
+        return medicoService.addRuta(Id, ruta);
+    }
 }

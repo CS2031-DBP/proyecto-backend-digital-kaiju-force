@@ -1,5 +1,6 @@
 package com.dkf.ODAD.Ubicacion.Domain;
 
+import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Paciente.Domain.Paciente;
 import jakarta.persistence.*;
 
@@ -24,4 +25,8 @@ public class Ubicacion {
     @OneToOne
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;
+
+    @OneToOne
+    @JoinColumn(name = "medico_id", nullable = false)
+    private Medico medico;
 }

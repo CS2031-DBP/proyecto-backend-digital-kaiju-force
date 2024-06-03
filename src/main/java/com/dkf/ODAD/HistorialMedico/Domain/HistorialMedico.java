@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 public class HistorialMedico {
@@ -13,7 +15,7 @@ public class HistorialMedico {
     private Long id;
 
     @Column(nullable = false)
-    private String fecha;
+    private LocalDateTime fecha;
 
     @Column(nullable = false)
     private String descripcion;

@@ -1,0 +1,8 @@
+{
+  "nombre": "Carlos",
+  "apellido": "Pérez",
+  "telefono": "123456789",
+  "especialidad": "Cardiología",
+  "correo": "carlos.perez@example.com",
+  "sexo": "Masculino"
+}

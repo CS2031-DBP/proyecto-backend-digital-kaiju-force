@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,13 +34,10 @@ public class VisitaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Visita> updateVisita(@PathVariable Long id, @RequestBody Visita visitaDetails) {
-        Visita updatedVisita = visitaService.updateVisita(id, visitaDetails);
-        if (updatedVisita != null) {
-            return ResponseEntity.ok(updatedVisita);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Visita> updateVisita(@PathVariable Long id, @RequestBody Visita visitaDetails) throws AccessDeniedException {
+        visitaService.updateVisitaInfo(id, visitaDetails);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")

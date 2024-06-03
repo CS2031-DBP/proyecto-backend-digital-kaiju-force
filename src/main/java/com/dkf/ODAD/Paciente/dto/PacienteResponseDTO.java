@@ -15,12 +15,7 @@ public class PacienteResponseDTO {
     @NotNull
     private String apellido;
     @NotNull
-    private String email;
-    @NotNull
-    private String telefono;
-    @NotNull
     private Integer edad;
     @NotNull
     private String sexo;
-    private int totalVisitas;
 }

@@ -1,6 +1,7 @@
 package com.dkf.ODAD.Ruta.Domain;
 
 import com.dkf.ODAD.Medico.Domain.Medico;
+import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -24,4 +25,12 @@ public class Ruta {
     @ManyToOne
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;
+
+    @OneToOne
+    @JoinColumn(name = "ubicacion_inicio_id", nullable = false)
+    private Ubicacion ubicacionInicio;
+
+    @OneToOne
+    @JoinColumn(name = "ubicacion_fin_id", nullable = false)
+    private Ubicacion ubicacionFin;
 }

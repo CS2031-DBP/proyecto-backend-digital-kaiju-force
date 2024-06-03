@@ -1,6 +1,7 @@
 package com.dkf.ODAD.auth;
 
 
+import com.dkf.ODAD.Event.emailEvent;
 import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Paciente.Domain.Paciente;
 import com.dkf.ODAD.Usuario.domain.Role;
@@ -13,6 +14,7 @@ import com.dkf.ODAD.config.JwtService;
 import com.dkf.ODAD.exceptions.UserAlreadyExistsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,13 +28,17 @@ public class AuthService {
     final JwtService jwtService;
     final PasswordEncoder passwordEncoder;
     final ModelMapper modelMapper;
+    final ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
-    public AuthService(BaseUserRepository<Usuario> userRepository, JwtService jwtService, PasswordEncoder passwordEncoder, ModelMapper modelMapper){
+    public AuthService(BaseUserRepository<Usuario> userRepository, JwtService jwtService,
+                       PasswordEncoder passwordEncoder, ModelMapper modelMapper,
+                       ApplicationEventPublisher applicationEventPublisher){
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     public AuthJwtResponse login(AuthLoginRequest req){
@@ -54,6 +60,8 @@ public class AuthService {
         if (user.isPresent()) throw new UserAlreadyExistsException("Email is already registered.");
 
         boolean isMedico = req.getIsMedico();
+
+
 
         if (isMedico) {
             Medico newMedico = new Medico();
@@ -83,9 +91,29 @@ public class AuthService {
 
             AuthJwtResponse response = new AuthJwtResponse();
             response.setToken(jwtService.generateToken(newPassenger));
+            applicationEventPublisher.publishEvent(new emailEvent(newPassenger.getEmail()));
             return response;
         }
     }
 
+    public AuthJwtResponse registerAdmin(AuthRegisterRequest req) {
+        Optional<Usuario> user = userRepository.findByEmail(req.getEmail());
+        if (user.isPresent()) throw new UserAlreadyExistsException("Email is already registered.");
+
+        Usuario newAdmin = new Usuario();
+        newAdmin.setNombre(req.getNombre());
+        newAdmin.setApellido(req.getApellido());
+        newAdmin.setTelefono(req.getTelefono());
+        newAdmin.setEmail(req.getEmail());
+        newAdmin.setPassword(passwordEncoder.encode(req.getPassword()));
+        newAdmin.setCreatedAt(ZonedDateTime.now());
+        newAdmin.setRole(Role.ADMIN);
+
+        userRepository.save(newAdmin);
+
+        AuthJwtResponse response = new AuthJwtResponse();
+        response.setToken(jwtService.generateToken(newAdmin));
+        return response;
+    }
 
 }

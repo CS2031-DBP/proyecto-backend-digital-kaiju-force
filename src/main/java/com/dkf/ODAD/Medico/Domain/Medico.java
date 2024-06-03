@@ -32,4 +32,6 @@ public class Medico extends Usuario {
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ruta> rutas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Paciente> pacientes;
 }

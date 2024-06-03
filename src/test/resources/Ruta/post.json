@@ -1,0 +1,14 @@
+{
+  "fechaRuta": "2024-06-15",
+  "horaInicio": "08:00",
+  "horaFin": "12:00",
+  "medico": {
+    "id": 1
+  },
+  "ubicacionInicio": {
+    "id": 1
+  },
+  "ubicacionFin": {
+    "id": 2
+  }
+}

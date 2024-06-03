@@ -1,6 +1,7 @@
 package com.dkf.ODAD.Paciente.Domain;
 
 import com.dkf.ODAD.HistorialMedico.Domain.HistorialMedico;
+import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Tratamiento.Domain.Tratamiento;
 import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
 import com.dkf.ODAD.Usuario.domain.Usuario;
@@ -33,4 +34,7 @@ public class Paciente extends Usuario {
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private Ubicacion ubicacion;
 
+    @ManyToOne
+    @JoinColumn(name = "medico_id", nullable = false)
+    private Medico medico;
 }

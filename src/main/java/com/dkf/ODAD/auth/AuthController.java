@@ -27,4 +27,9 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<AuthJwtResponse> createAdmin(@RequestBody AuthRegisterRequest request) {
+        return ResponseEntity.ok(authService.registerAdmin(request));
+    }
+
 }

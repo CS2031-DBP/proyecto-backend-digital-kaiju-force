@@ -3,7 +3,6 @@ package com.dkf.ODAD.HistorialMedico.Application;
 import com.dkf.ODAD.HistorialMedico.Domain.HistorialMedico;
 import com.dkf.ODAD.HistorialMedico.Service.HistorialMedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

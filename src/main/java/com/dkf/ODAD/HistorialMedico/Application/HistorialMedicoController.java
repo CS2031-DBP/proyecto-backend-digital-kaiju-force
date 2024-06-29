@@ -20,7 +20,6 @@ public class HistorialMedicoController {
         this.historialMedicoService=historialMedicoService;
     }
 
-
     @GetMapping("/paciente/{pacienteId}")
     public List<HistorialMedico> getHistorialesMedicosByPacienteId(@PathVariable Long pacienteId) {
         return historialMedicoService.findAllByPacienteId(pacienteId);

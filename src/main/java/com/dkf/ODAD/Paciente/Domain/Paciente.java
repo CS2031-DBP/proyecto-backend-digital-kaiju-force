@@ -35,6 +35,6 @@ public class Paciente extends Usuario {
     private Ubicacion ubicacion;
 
     @ManyToOne
-    @JoinColumn(name = "medico_id", nullable = false)
+    @JoinColumn(name = "medico_id")
     private Medico medico;
 }

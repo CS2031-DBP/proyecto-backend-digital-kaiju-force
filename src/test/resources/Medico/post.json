@@ -1,8 +1,0 @@
-{
-  "nombre": "John",
-  "apellido": "Doe",
-  "email": "johndoe@example.com",
-  "password": "mysecretpassword",
-  "phone": "123-456-7890",
-  "isMedico": true
-}

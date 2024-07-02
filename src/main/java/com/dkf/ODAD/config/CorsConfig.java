@@ -13,7 +13,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 // Disable Cors Origin to React frontend
-                registry.addMapping("/**").allowedOrigins("http://127.0.0.1:5173");
+                registry.addMapping("/**").allowedOrigins("http://localhost:5173");
 
             }
         };

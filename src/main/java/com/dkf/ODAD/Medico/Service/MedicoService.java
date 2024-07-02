@@ -16,8 +16,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,10 +108,11 @@ public class MedicoService {
         }
         medico.setNombre(newMedicoInfoDTO.getNombre());
         medico.setApellido(newMedicoInfoDTO.getApellido());
-        medico.setTelefono(newMedicoInfoDTO.getTelefono());
         medico.setEspecialidad(newMedicoInfoDTO.getEspecialidad());
-        medico.setCorreo(newMedicoInfoDTO.getCorreo());
         medico.setSexo(newMedicoInfoDTO.getSexo());
+        if (StringUtils.hasText(newMedicoInfoDTO.getTelefono())) {
+            medico.setTelefono(newMedicoInfoDTO.getTelefono());
+        }
 
         medicoRepository.save(medico);
 
@@ -121,18 +124,6 @@ public class MedicoService {
         return medico.getVisitas();
     }
 
-    public Visita addVisita(Long medicoId, Visita visita) throws AccessDeniedException {
-        String username = authHelper.getAuthenticatedUserEmail();
-
-        Medico medico = medicoRepository.findById(medicoId)
-                .orElseThrow(() -> new ResourceNotFoundException("Medico no encontrado!"));
-
-        if (!medico.getEmail().equals(username)){
-            throw new AccessDeniedException("No tienes permiso para eso!");
-        }
-        visita.setMedico(medico);
-        return visitaService.createVisita(visita);
-    }
 
     public List<Ruta> getRutas(Long medicoId) {
         Medico medico = medicoRepository.findById(medicoId)

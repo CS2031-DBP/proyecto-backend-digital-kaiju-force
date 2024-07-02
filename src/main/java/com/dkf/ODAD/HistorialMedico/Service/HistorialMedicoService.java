@@ -43,7 +43,16 @@ public class HistorialMedicoService {
         return historialMedicoRepository.findByPacienteId(pacienteId);
     }
 
-    public void createHistorialMedico(HistorialMedico historialMedico) {
+    public void createHistorialMedico(HistorialMedicoDTO historialMedicoDTO) {
+        Long pacienteId = historialMedicoDTO.getPaciente_id();
+        Paciente paciente = pacienteRepository
+                .findById(pacienteId)
+                .orElseThrow(() -> new UsernameNotFoundException("Paciente no encontrado!!!"));
+        HistorialMedico historialMedico = new HistorialMedico();
+
+        historialMedico.setPaciente(paciente);
+        historialMedico.setDescripcion(historialMedicoDTO.getDescripcion());
+        historialMedico.setFecha(historialMedicoDTO.getFecha());
         historialMedicoRepository.save(historialMedico);
     }
 

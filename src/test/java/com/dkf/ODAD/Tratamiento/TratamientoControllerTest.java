@@ -43,7 +43,7 @@ public class TratamientoControllerTest {
     public void setUp() throws Exception {
         tratamientoRepository.deleteAll();
 
-        String jsonContent = Reader.readJsonFile("/tratamiento/post.json");
+        String jsonContent = Reader.readJsonFile("/Tratamiento/post.json");
 
         ResultActions res = mockMvc.perform(post("/Tratamiento/addTratamiento")
                 .contentType(APPLICATION_JSON)

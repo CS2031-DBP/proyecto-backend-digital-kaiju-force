@@ -14,7 +14,6 @@ public class NewMedicoInfoDTO {
     @Size(min = 3, max = 50)
     private String apellido;
 
-    @NotNull
     @Size(min = 9, max = 12)
     private String telefono;
 
@@ -22,8 +21,7 @@ public class NewMedicoInfoDTO {
     @Size(min = 3, max = 30)
     private String especialidad;
 
-    @NotNull
-    private String correo;
+    private String email;
 
     @NotNull
     private String sexo;

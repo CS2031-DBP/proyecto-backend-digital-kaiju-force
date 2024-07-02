@@ -2,5 +2,7 @@
   "nombre": "John",
   "apellido": "Doe",
   "email": "johndoe@example.com",
-  "password": "password123"
+  "password": "mysecretpassword",
+  "telefono": "123456789",
+  "isMedico": false
 }

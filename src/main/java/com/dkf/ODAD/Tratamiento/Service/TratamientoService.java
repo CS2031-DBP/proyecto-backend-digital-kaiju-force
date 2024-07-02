@@ -1,7 +1,10 @@
 package com.dkf.ODAD.Tratamiento.Service;
 
+import com.dkf.ODAD.Paciente.Domain.Paciente;
+import com.dkf.ODAD.Paciente.Infraestructure.PacienteRepository;
 import com.dkf.ODAD.Tratamiento.Domain.Tratamiento;
 import com.dkf.ODAD.Tratamiento.Infraestructure.TratamientoRepository;
+import com.dkf.ODAD.Tratamiento.dto.TratamientoDTO;
 import com.dkf.ODAD.auth.AuthHelper;
 import com.dkf.ODAD.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +18,13 @@ import java.util.List;
 public class TratamientoService {
 
     private final TratamientoRepository tratamientoRepository;
+    private final PacienteRepository pacienteRepository;
     private final AuthHelper authHelper;
 
     @Autowired
-    public TratamientoService(TratamientoRepository tratamientoRepository, AuthHelper authHelper) {
+    public TratamientoService(TratamientoRepository tratamientoRepository, PacienteRepository pacienteRepository, AuthHelper authHelper) {
         this.tratamientoRepository = tratamientoRepository;
+        this.pacienteRepository = pacienteRepository;
         this.authHelper = authHelper;
     }
 
@@ -32,7 +37,14 @@ public class TratamientoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Tratamiento no encontrado"));
     }
 
-    public Tratamiento saveTratamiento(Tratamiento tratamiento) {
+    public Tratamiento saveTratamiento(TratamientoDTO tratamientoDTO) {
+        Paciente paciente = pacienteRepository.findById(tratamientoDTO.getPaciente_id())
+                .orElseThrow(() -> new UsernameNotFoundException("Paciente no encontrado"));
+
+        Tratamiento tratamiento = new Tratamiento();
+        tratamiento.setNombreTratamiento(tratamientoDTO.getNombreTratamiento());
+        tratamiento.setDescripcion(tratamientoDTO.getDescripcion());
+        tratamiento.setPaciente(paciente);
         return tratamientoRepository.save(tratamiento);
     }
 
@@ -46,7 +58,7 @@ public class TratamientoService {
         tratamientoRepository.deleteById(id);
     }
 
-    public Tratamiento updateTratamiento(Long id, Tratamiento updatedTratamiento) {
+    public Tratamiento updateTratamiento(Long id, TratamientoDTO updatedTratamiento) {
         Tratamiento existingTratamiento = tratamientoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Tratamiento no encontrado"));
         existingTratamiento.setNombreTratamiento(updatedTratamiento.getNombreTratamiento());

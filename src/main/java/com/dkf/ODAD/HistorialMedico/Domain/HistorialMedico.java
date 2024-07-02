@@ -1,6 +1,8 @@
 package com.dkf.ODAD.HistorialMedico.Domain;
 
 import com.dkf.ODAD.Paciente.Domain.Paciente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -20,6 +22,7 @@ public class HistorialMedico {
     @Column(nullable = false)
     private String descripcion;
 
+    @JsonIgnoreProperties("historialMedicoList")
     @ManyToOne
     @JoinColumn(name = "paciente_id", nullable = false)
     private Paciente paciente;

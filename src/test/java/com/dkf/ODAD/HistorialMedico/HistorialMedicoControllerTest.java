@@ -45,7 +45,7 @@ public class HistorialMedicoControllerTest {
     public void setUp() throws Exception {
         historialMedicoRepository.deleteAll();
 
-        String jsonContent = Reader.readJsonFile("/historial/post.json");
+        String jsonContent = Reader.readJsonFile("Paciente/post.json");
 
         var res = mockMvc.perform(post("/auth/register")
                         .contentType(APPLICATION_JSON)
@@ -68,7 +68,7 @@ public class HistorialMedicoControllerTest {
 
     @Test
     public void testAuthorizedAccessToCreateHistorialMedico() throws Exception {
-        String jsonContent = Reader.readJsonFile("/historial/post.json");
+        String jsonContent = Reader.readJsonFile("/HistorialMedico/post.json");
 
         mockMvc.perform(post("/historial")
                         .contentType(APPLICATION_JSON)

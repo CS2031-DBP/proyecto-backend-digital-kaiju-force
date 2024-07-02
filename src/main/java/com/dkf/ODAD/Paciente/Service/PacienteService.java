@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PacienteService {
@@ -81,19 +80,23 @@ public class PacienteService {
         if (!paciente.getEmail().equals(username)){
             throw new AccessDeniedException("User is not the owner of the resource.");
         }
-        return medicoRepository
-                .findById(paciente.getMedico().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("El paciente no tiene Medico!!!"));
+        Medico medico = paciente.getMedico();
+        if (medico == null) {
+            throw new ResourceNotFoundException("El paciente no tiene Medico asignado.");
+        }
+        return medico;
     }
 
-    public void updateOrCreateMedico(Long pacienteId, String medicoNombre, String medicoApellido) {
+    public void updateOrCreateMedico(Long pacienteId, String medicoNombre, String medicoApellido, String medicoEmail) {
         String username = authHelper.getAuthenticatedUserEmail();
         Paciente paciente = pacienteRepository.findById(pacienteId).orElseThrow(()
                 -> new UsernameNotFoundException("Paciente no encontrado!!"));
-        Medico medico = medicoRepository.findByNombreAndApellido(medicoNombre, medicoApellido).orElseThrow(()
+        Medico medico = medicoRepository.findByNombreAndApellidoAndEmail(medicoNombre, medicoApellido, medicoEmail).orElseThrow(()
                 -> new UsernameNotFoundException("Medico no encontrado!!"));
 
         paciente.setMedico(medico);
+
+        pacienteRepository.save(paciente);
     }
 
 }

@@ -42,7 +42,7 @@ public class PacienteControllerTest {
     String token = "";
 
     private void createUnauthorizedPaciente() throws Exception {
-        String jsonContent = Reader.readJsonFile("/paciente/post.json");
+        String jsonContent = Reader.readJsonFile("Paciente/post.json");
         jsonContent = reader.updateEmail(jsonContent, "email", "other@example.com");
 
         mockMvc.perform(post("/auth/register")
@@ -74,6 +74,19 @@ public class PacienteControllerTest {
                 .andExpect(status().isOk());
     }
 
+
+    @Test
+    public void testAuthorizedAccessToGetDriverById() throws Exception {
+        Long authorizedPacienteId = pacienteRepository
+                .findByEmail("johndoe@example.com")
+                .orElseThrow()
+                .getId();
+
+        mockMvc.perform(get("/Paciente/{id}", authorizedPacienteId)
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
     @Test
     @WithAnonymousUser
     public void testUnauthorizedAccessToGetOwnPacienteInfo() throws Exception {
@@ -91,7 +104,7 @@ public class PacienteControllerTest {
 
     @Test
     public void testAuthorizedAccessToAddPaciente() throws Exception {
-        String jsonContent = Reader.readJsonFile("/paciente/post.json");
+        String jsonContent = Reader.readJsonFile("/Paciente/post.json");
 
         mockMvc.perform(post("/Paciente/addPaciente")
                         .contentType(APPLICATION_JSON)
@@ -111,7 +124,7 @@ public class PacienteControllerTest {
 
     @Test
     public void testAuthorizedAccessToUpdatePacienteInfo() throws Exception {
-        String jsonContent = Reader.readJsonFile("/paciente/patch.json");
+        String jsonContent = Reader.readJsonFile("/Paciente/patch.json");
         Long authorizedPacienteId = pacienteRepository
                 .findByEmail("johndoe@example.com")
                 .orElseThrow()

@@ -91,7 +91,6 @@ public class AuthService {
 
             AuthJwtResponse response = new AuthJwtResponse();
             response.setToken(jwtService.generateToken(newPassenger));
-            applicationEventPublisher.publishEvent(new emailEvent(newPassenger.getEmail()));
             return response;
         }
     }

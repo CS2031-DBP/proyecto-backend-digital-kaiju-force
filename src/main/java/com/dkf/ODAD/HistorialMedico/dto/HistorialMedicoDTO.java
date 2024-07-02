@@ -15,4 +15,6 @@ public class HistorialMedicoDTO {
     @Size(min = 3, max = 500)
     private String descripcion;
 
+    private Long paciente_id;
+
 }

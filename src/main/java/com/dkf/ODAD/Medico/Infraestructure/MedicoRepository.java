@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 
 public interface MedicoRepository extends BaseUserRepository<Medico> {
-    Optional<Medico> findByNombreAndApellido(String medicoNombre, String medicoApellido);
+    Optional<Medico> findByNombreAndApellidoAndEmail(String medicoNombre, String medicoApellido, String medicoEmail);
 }

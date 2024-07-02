@@ -9,4 +9,6 @@ public class UpdateMedicoDTO {
     private String nombre;
     @NotNull
     private String apellido;
+    @NotNull
+    private String correo;
 }

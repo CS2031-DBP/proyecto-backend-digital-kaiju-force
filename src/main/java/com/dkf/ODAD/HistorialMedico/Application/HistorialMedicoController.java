@@ -2,8 +2,8 @@ package com.dkf.ODAD.HistorialMedico.Application;
 
 import com.dkf.ODAD.HistorialMedico.Domain.HistorialMedico;
 import com.dkf.ODAD.HistorialMedico.Service.HistorialMedicoService;
+import com.dkf.ODAD.HistorialMedico.dto.HistorialMedicoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +20,14 @@ public class HistorialMedicoController {
         this.historialMedicoService=historialMedicoService;
     }
 
-
     @GetMapping("/paciente/{pacienteId}")
     public List<HistorialMedico> getHistorialesMedicosByPacienteId(@PathVariable Long pacienteId) {
         return historialMedicoService.findAllByPacienteId(pacienteId);
     }
 
     @PostMapping
-    public ResponseEntity<HistorialMedico> createHistorialMedico(@RequestBody HistorialMedico historialMedico) {
-        historialMedicoService.createHistorialMedico(historialMedico);
+    public ResponseEntity<HistorialMedico> createHistorialMedico(@RequestBody HistorialMedicoDTO historialMedicoDTO) {
+        historialMedicoService.createHistorialMedico(historialMedicoDTO);
         return ResponseEntity.ok().build();
     }
 

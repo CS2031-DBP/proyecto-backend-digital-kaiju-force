@@ -2,6 +2,7 @@ package com.dkf.ODAD.Tratamiento.Application;
 
 import com.dkf.ODAD.Tratamiento.Domain.Tratamiento;
 import com.dkf.ODAD.Tratamiento.Service.TratamientoService;
+import com.dkf.ODAD.Tratamiento.dto.TratamientoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,8 +38,8 @@ public class TratamientoController {
 
     @PreAuthorize("hasRole('ROLE_MEDICO')")
     @PostMapping("/addTratamiento")
-    public ResponseEntity<Tratamiento> addTratamiento(@RequestBody Tratamiento tratamiento) {
-        Tratamiento nuevoTratamiento = tratamientoService.saveTratamiento(tratamiento);
+    public ResponseEntity<Tratamiento> addTratamiento(@RequestBody TratamientoDTO tratamientoDTO) {
+        Tratamiento nuevoTratamiento = tratamientoService.saveTratamiento(tratamientoDTO);
         return new ResponseEntity<>(nuevoTratamiento, HttpStatus.CREATED);
     }
 
@@ -51,8 +52,8 @@ public class TratamientoController {
 
     @PreAuthorize("hasRole('ROLE_MEDICO') or hasRole('ROLE_PACIENTE')")
     @PutMapping("/{id}")
-    public ResponseEntity<Tratamiento> updateTratamiento(@PathVariable Long id, @RequestBody Tratamiento tratamiento) {
-        Tratamiento updatedTratamiento = tratamientoService.updateTratamiento(id, tratamiento);
+    public ResponseEntity<Tratamiento> updateTratamiento(@PathVariable Long id, @RequestBody TratamientoDTO tratamientoDTO) {
+        Tratamiento updatedTratamiento = tratamientoService.updateTratamiento(id, tratamientoDTO);
         return new ResponseEntity<>(updatedTratamiento, HttpStatus.OK);
     }
 }

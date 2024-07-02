@@ -6,6 +6,7 @@ import com.dkf.ODAD.Tratamiento.Domain.Tratamiento;
 import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
 import com.dkf.ODAD.Usuario.domain.Usuario;
 import com.dkf.ODAD.Visita.Domain.Visita;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,19 +23,20 @@ public class Paciente extends Usuario {
     @Column
     private String sexo;
 
+    @JsonIgnoreProperties("paciente")
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Visita> visitas = new ArrayList<>();
 
+    @JsonIgnoreProperties("paciente")
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tratamiento> tratamientos = new ArrayList<>();
 
+    @JsonIgnoreProperties("paciente")
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HistorialMedico> historialMedicoList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Ubicacion ubicacion;
-
+    @JsonIgnoreProperties("pacientes")
     @ManyToOne
-    @JoinColumn(name = "medico_id", nullable = false)
+    @JoinColumn(name = "medico_id")
     private Medico medico;
 }

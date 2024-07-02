@@ -38,7 +38,7 @@ public class MedicoController {
 
     @PreAuthorize("hasRole('ROLE_MEDICO')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDriver(@PathVariable Long id) throws AccessDeniedException {
+    public ResponseEntity<Void> deleteMedico(@PathVariable Long id) throws AccessDeniedException {
         medicoService.deleteMedico(id);
         return ResponseEntity.noContent().build();
     }
@@ -56,18 +56,9 @@ public class MedicoController {
         return medicoService.getVisitas(Id);
     }
 
-    @PostMapping("/{Id}/visitas")
-    public Visita addVisita(@PathVariable Long Id, @RequestBody Visita visita) throws AccessDeniedException {
-        return medicoService.addVisita(Id, visita);
-    }
-
     @GetMapping("/{Id}/rutas")
     public List<Ruta> getRutas(@PathVariable Long Id) {
         return medicoService.getRutas(Id);
     }
 
-    @PostMapping("/{Id}/rutas")
-    public Ruta addRuta(@PathVariable Long Id, @RequestBody Ruta ruta) {
-        return medicoService.addRuta(Id, ruta);
-    }
 }

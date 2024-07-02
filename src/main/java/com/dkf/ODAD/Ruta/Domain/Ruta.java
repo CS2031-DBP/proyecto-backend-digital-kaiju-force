@@ -2,6 +2,8 @@ package com.dkf.ODAD.Ruta.Domain;
 
 import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -22,6 +24,7 @@ public class Ruta {
     @Column(nullable = false)
     private String horaFin;
 
+    @JsonIgnoreProperties("rutas")
     @ManyToOne
     @JoinColumn(name = "medico_id", nullable = false)
     private Medico medico;

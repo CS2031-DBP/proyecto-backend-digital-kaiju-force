@@ -1,7 +1,5 @@
 package com.dkf.ODAD.Ubicacion.Domain;
 
-import com.dkf.ODAD.Medico.Domain.Medico;
-import com.dkf.ODAD.Paciente.Domain.Paciente;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -22,11 +20,6 @@ public class Ubicacion {
     @Column(nullable = false)
     private String direccion;
 
-    @OneToOne
-    @JoinColumn(name = "paciente_id", nullable = false)
-    private Paciente paciente;
-
-    @OneToOne
-    @JoinColumn(name = "medico_id", nullable = false)
-    private Medico medico;
+    @Column
+    private String descripcion;
 }

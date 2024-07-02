@@ -2,7 +2,6 @@ package com.dkf.ODAD.Ruta.Service;
 
 import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Medico.Infraestructure.MedicoRepository;
-import com.dkf.ODAD.Medico.dto.NewMedicoInfoDTO;
 import com.dkf.ODAD.Ruta.Domain.Ruta;
 import com.dkf.ODAD.Ruta.Infraestructure.RutaRepository;
 import com.dkf.ODAD.Ruta.dto.CreateRutaRequestDTO;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
@@ -45,19 +43,27 @@ public class RutaService {
                 .findByEmail(userEmail)
                 .orElseThrow(() -> new UsernameNotFoundException("Medico no encontrado!"));
 
-        Ubicacion ubicacionInicio = ubicacionRepository.findById(rutaRequestDTO.getUbicacionInicioDTO().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Ubicación de inicio no encontrada!"));
-        Ubicacion ubicacionFinal = ubicacionRepository.findById(rutaRequestDTO.getUbicacionFinalDTO().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Ubicación final no encontrada!"));
-
 
         Ruta ruta = new Ruta();
         ruta.setFechaRuta(rutaRequestDTO.getFechaRuta());
         ruta.setMedico(medicoViajero);
         ruta.setHoraInicio(rutaRequestDTO.getHoraInicio());
         ruta.setHoraFin(rutaRequestDTO.getHoraFin());
-        ruta.setUbicacionInicio(ubicacionInicio);
-        ruta.setUbicacionFin(ubicacionFinal);
+
+        // Verificar y guardar la ubicación de inicio si existe en el DTO
+        Ubicacion ubicacionInicio = rutaRequestDTO.getUbicacionInicio();
+        if (ubicacionInicio != null) {
+            ubicacionRepository.save(ubicacionInicio); // Guardar ubicación de inicio en la base de datos
+            ruta.setUbicacionInicio(ubicacionInicio); // Asociar ubicación de inicio a la ruta
+        }
+
+        // Verificar y guardar la ubicación final si existe en el DTO
+        Ubicacion ubicacionFinal = rutaRequestDTO.getUbicacionFinal();
+        if (ubicacionFinal != null) {
+            ubicacionRepository.save(ubicacionFinal); // Guardar ubicación final en la base de datos
+            ruta.setUbicacionFin(ubicacionFinal); // Asociar ubicación final a la ruta
+        }
+
         rutaRepository.save(ruta);
         return "Ruta creada!";
     }

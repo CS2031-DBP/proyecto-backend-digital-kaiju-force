@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Paciente")
+@RequestMapping("/paciente")
 public class PacienteController {
 
     private final PacienteService pacienteService;

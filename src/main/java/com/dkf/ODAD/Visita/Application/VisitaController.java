@@ -21,7 +21,6 @@ public class VisitaController {
     @Autowired
     private VisitaService visitaService;
 
-
     @GetMapping
     public ResponseEntity<List<Visita>> getVisitas() {
         List<Visita> visitas = visitaService.getAllVisitas();

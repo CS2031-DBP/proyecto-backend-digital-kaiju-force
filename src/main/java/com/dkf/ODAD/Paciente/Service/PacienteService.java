@@ -126,7 +126,6 @@ public class PacienteService {
             paciente.setTelefono(pacienteInfoDTO.getTelefono());
         }
         paciente.setEdad(pacienteInfoDTO.getEdad());
-
         pacienteRepository.save(paciente);
 
     }

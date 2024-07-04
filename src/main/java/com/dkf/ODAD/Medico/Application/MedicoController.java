@@ -47,9 +47,8 @@ public class MedicoController {
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateMedicoInfo(@PathVariable Long id, @RequestBody NewMedicoInfoDTO medicoInfoDTO) throws AccessDeniedException {
         medicoService.updateMedicoInfo(id, medicoInfoDTO);
-        return ResponseEntity.ok("Driver info updated");
+        return ResponseEntity.ok("Medico info updated");
     }
-
 
     @GetMapping("/{Id}/visitas")
     public List<Visita> getVisitas(@PathVariable Long Id) {

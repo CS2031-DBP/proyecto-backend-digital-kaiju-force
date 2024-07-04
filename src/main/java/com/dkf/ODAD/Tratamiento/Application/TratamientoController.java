@@ -23,9 +23,9 @@ public class TratamientoController {
         this.tratamientoService = tratamientoService;
     }
 
-    @GetMapping("/getTratamientos")
-    public ResponseEntity<List<Tratamiento>> getTratamientos() {
-        List<Tratamiento> tratamientos = tratamientoService.getAllTratamientos();
+    @GetMapping("/getTratamientos/{id}")
+    public ResponseEntity<List<Tratamiento>> getTratamientos(@PathVariable Long id) {
+        List<Tratamiento> tratamientos = tratamientoService.findByPacienteID(id);
         return new ResponseEntity<>(tratamientos, HttpStatus.OK);
     }
 

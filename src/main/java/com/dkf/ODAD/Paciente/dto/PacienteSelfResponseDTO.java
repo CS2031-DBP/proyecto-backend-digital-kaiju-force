@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class PacienteSelfResponseDTO {
+    private long id;
     @Size(min = 1, max = 50)
     private String nombre;
     @Size(min = 1, max = 50)
@@ -20,5 +21,6 @@ public class PacienteSelfResponseDTO {
     @DecimalMin("0")
     private Float avgRating;
     private int totalVisitas;
+
 
 }

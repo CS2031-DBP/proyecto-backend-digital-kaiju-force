@@ -28,8 +28,8 @@ public class TratamientoService {
         this.authHelper = authHelper;
     }
 
-    public List<Tratamiento> getAllTratamientos() {
-        return tratamientoRepository.findAll();
+    public List<Tratamiento> findByPacienteID(Long pacienteID) {
+        return tratamientoRepository.findByPaciente_Id(pacienteID);
     }
 
     public Tratamiento getTratamientoById(Long id) {

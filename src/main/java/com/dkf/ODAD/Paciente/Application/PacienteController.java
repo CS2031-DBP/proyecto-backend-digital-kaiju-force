@@ -3,9 +3,11 @@ package com.dkf.ODAD.Paciente.Application;
 
 import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Medico.Service.MedicoService;
+import com.dkf.ODAD.Medico.dto.NewMedicoInfoDTO;
 import com.dkf.ODAD.Medico.dto.UpdateMedicoDTO;
 import com.dkf.ODAD.Paciente.Domain.Paciente;
 import com.dkf.ODAD.Paciente.Service.PacienteService;
+import com.dkf.ODAD.Paciente.dto.NewPacienteInfoDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteResponseDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteSelfResponseDTO;
 import com.dkf.ODAD.exceptions.ResourceNotFoundException;
@@ -73,6 +75,13 @@ public class PacienteController {
             throws  AccessDeniedException {
         pacienteService.updateOrCreateMedico(paciente_id, medicoDTO.getNombre(), medicoDTO.getApellido(), medicoDTO.getCorreo());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updatePacienteInfo(@PathVariable Long id, @RequestBody NewPacienteInfoDTO pacienteInfoDTO) throws java.nio.file.AccessDeniedException {
+        pacienteService.updatePacienteInfo(id, pacienteInfoDTO);
+        return ResponseEntity.ok("Paciente info updated");
     }
 
 }

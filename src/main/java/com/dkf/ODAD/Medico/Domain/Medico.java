@@ -19,6 +19,9 @@ import java.util.List;
 public class Medico extends Usuario {
 
     @Column
+    private Integer edad;
+
+    @Column
     private String sexo;
 
     @Column

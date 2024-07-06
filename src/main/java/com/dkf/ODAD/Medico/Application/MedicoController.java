@@ -1,12 +1,15 @@
 package com.dkf.ODAD.Medico.Application;
 
 
+import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Medico.Service.MedicoService;
 import com.dkf.ODAD.Medico.dto.MedicoResponseDTO;
 import com.dkf.ODAD.Medico.dto.NewMedicoInfoDTO;
+import com.dkf.ODAD.Paciente.Domain.Paciente;
 import com.dkf.ODAD.Ruta.Domain.Ruta;
 import com.dkf.ODAD.Visita.Domain.Visita;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,12 @@ public class MedicoController {
 
     @Autowired
     public MedicoController(MedicoService medicoService) {this.medicoService = medicoService;}
+
+    @GetMapping("/getMedicos")
+    public ResponseEntity<List<Medico>> getMedicos() {
+        List<Medico> medicos = medicoService.medicos();
+        return new ResponseEntity<>(medicos, HttpStatus.OK);
+    }
 
     @PreAuthorize("hasRole('ROLE_MEDICO')")
     @GetMapping("/{id}")

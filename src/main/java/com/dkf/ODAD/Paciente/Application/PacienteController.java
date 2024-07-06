@@ -2,19 +2,15 @@ package com.dkf.ODAD.Paciente.Application;
 
 
 import com.dkf.ODAD.Medico.Domain.Medico;
-import com.dkf.ODAD.Medico.Service.MedicoService;
-import com.dkf.ODAD.Medico.dto.NewMedicoInfoDTO;
 import com.dkf.ODAD.Medico.dto.UpdateMedicoDTO;
 import com.dkf.ODAD.Paciente.Domain.Paciente;
 import com.dkf.ODAD.Paciente.Service.PacienteService;
 import com.dkf.ODAD.Paciente.dto.NewPacienteInfoDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteResponseDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteSelfResponseDTO;
-import com.dkf.ODAD.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,10 +66,10 @@ public class PacienteController {
     }
 
     @PreAuthorize(("hasRole('ROLE_PACIENTE')"))
-    @PatchMapping("/medico/{paciente_id}")
-    public ResponseEntity<?> findMedico(@PathVariable Long paciente_id, @RequestBody UpdateMedicoDTO medicoDTO)
+    @PatchMapping("/addMedico/{medico_id}")
+    public ResponseEntity<?> updateOrCreateMedicoByID(@PathVariable Long medico_id)
             throws  AccessDeniedException {
-        pacienteService.updateOrCreateMedico(paciente_id, medicoDTO.getNombre(), medicoDTO.getApellido(), medicoDTO.getCorreo());
+        pacienteService.updateOrCreateMedico(medico_id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

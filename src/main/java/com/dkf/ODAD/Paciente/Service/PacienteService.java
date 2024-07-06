@@ -91,11 +91,11 @@ public class PacienteService {
         return medico;
     }
 
-    public void updateOrCreateMedico(Long pacienteId, String medicoNombre, String medicoApellido, String medicoEmail) {
+    public void updateOrCreateMedico(Long medicoID) {
         String username = authHelper.getAuthenticatedUserEmail();
-        Paciente paciente = pacienteRepository.findById(pacienteId).orElseThrow(()
-                -> new UsernameNotFoundException("Paciente no encontrado!!"));
-        Medico medico = medicoRepository.findByNombreAndApellidoAndEmail(medicoNombre, medicoApellido, medicoEmail).orElseThrow(()
+        Paciente paciente = pacienteRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Paciente no encontrado!"));
+
+        Medico medico = medicoRepository.findById(medicoID).orElseThrow(()
                 -> new UsernameNotFoundException("Medico no encontrado!!"));
 
         paciente.setMedico(medico);

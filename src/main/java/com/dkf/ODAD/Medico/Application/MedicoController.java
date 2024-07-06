@@ -68,5 +68,4 @@ public class MedicoController {
     public List<Ruta> getRutas(@PathVariable Long Id) {
         return medicoService.getRutas(Id);
     }
-
 }

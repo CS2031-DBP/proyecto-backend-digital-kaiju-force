@@ -52,9 +52,7 @@ public class TratamientoService {
         String username = authHelper.getAuthenticatedUserEmail();
         Tratamiento tratamiento = tratamientoRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Tratamiento no encontrado"));
-        if (!tratamiento.getPaciente().getEmail().equals(username)) {
-            throw new AccessDeniedException("User is not the owner of the resource.");
-        }
+
         tratamientoRepository.deleteById(id);
     }
 

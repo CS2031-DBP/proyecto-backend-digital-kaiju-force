@@ -38,6 +38,12 @@ public class PacienteController {
         return new ResponseEntity<>(pacientes, HttpStatus.OK);
     }
 
+    @GetMapping("/pacientes_medico/{id}")
+    public ResponseEntity<List<Paciente>> getPacientesByMedico(@PathVariable Long id) {
+        List<Paciente> pacientes = pacienteService.pacientesByMedico(id);
+        return new ResponseEntity<>(pacientes, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasRole('ROLE_PACIENTE') or hasRole('ROLE_MEDICO')")
     @GetMapping("/{id}")
     public ResponseEntity<PacienteResponseDTO> getPacienteById(@PathVariable Long id) {

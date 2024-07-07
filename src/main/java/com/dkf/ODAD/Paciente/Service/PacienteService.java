@@ -38,6 +38,10 @@ public class PacienteService {
         return pacienteRepository.findAll();
     }
 
+    public List<Paciente> pacientesByMedico(Long id) {
+        return pacienteRepository.findAllByMedicoId(id);
+    }
+
     public PacienteResponseDTO getPacienteInfo(Long id) {
         Paciente paciente = pacienteRepository
                 .findById(id)

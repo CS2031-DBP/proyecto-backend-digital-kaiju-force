@@ -8,6 +8,8 @@ import com.dkf.ODAD.Medico.Infraestructure.MedicoRepository;
 import com.dkf.ODAD.Paciente.Domain.Paciente;
 import com.dkf.ODAD.Paciente.Infraestructure.PacienteRepository;
 import com.dkf.ODAD.Paciente.Service.PacienteService;
+import com.dkf.ODAD.Tratamiento.Domain.Tratamiento;
+import com.dkf.ODAD.Tratamiento.dto.TratamientoDTO;
 import com.dkf.ODAD.auth.AuthHelper;
 import com.dkf.ODAD.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,11 @@ public class HistorialMedicoService {
         this.authHelper = authHelper;
         this.medicoRepository = medicoRepository;
         this.pacienteService = pacienteService;
+    }
+
+    public HistorialMedico getHistorialByID(Long id) {
+        return historialMedicoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Historial Médico no encontrado"));
     }
 
 
@@ -79,6 +86,14 @@ public class HistorialMedicoService {
         historialMedico.setFecha(historialMedicoDTO.getFecha());
         historialMedico.setDescripcion(historialMedicoDTO.getDescripcion());
 
+    }
+
+    public HistorialMedico updateHistorial(Long id, HistorialMedicoDTO updatedHistorial) {
+        HistorialMedico existingHistorial = historialMedicoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Historial no encontrado"));
+        existingHistorial.setFecha(updatedHistorial.getFecha());
+        existingHistorial.setDescripcion(updatedHistorial.getDescripcion());
+        return historialMedicoRepository.save(existingHistorial);
     }
 
 }

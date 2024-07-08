@@ -26,4 +26,6 @@ public class MedicoResponseDTO {
     private String especialidad;
 
     private Integer totalVisitas;
+
+    private Integer edad;
 }

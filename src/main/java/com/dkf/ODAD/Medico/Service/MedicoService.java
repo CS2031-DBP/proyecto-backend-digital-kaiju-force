@@ -5,6 +5,7 @@ import com.dkf.ODAD.Medico.Domain.Medico;
 import com.dkf.ODAD.Medico.Infraestructure.MedicoRepository;
 import com.dkf.ODAD.Medico.dto.MedicoResponseDTO;
 import com.dkf.ODAD.Medico.dto.NewMedicoInfoDTO;
+import com.dkf.ODAD.Paciente.dto.PacienteSelfResponseDTO;
 import com.dkf.ODAD.Ruta.Domain.Ruta;
 import com.dkf.ODAD.Ruta.Infraestructure.RutaRepository;
 import com.dkf.ODAD.Ruta.Service.RutaService;
@@ -68,6 +69,7 @@ public class MedicoService {
         response.setTelefono(medico.getTelefono());
         response.setAvgRating(medico.getAvgRating());
         response.setEspecialidad(medico.getEspecialidad());
+        response.setEdad(medico.getEdad());
         response.setTotalVisitas(medico.getVisitas().size());
 
         return response;
@@ -80,7 +82,7 @@ public class MedicoService {
                 .findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Driver not found"));
 
-        return getMedicoInfo(medico.getId());
+        return modelMapper.map(medico, MedicoResponseDTO.class);
     }
 
     public void deleteMedico(Long id) throws AccessDeniedException {
@@ -110,6 +112,7 @@ public class MedicoService {
         medico.setApellido(newMedicoInfoDTO.getApellido());
         medico.setEspecialidad(newMedicoInfoDTO.getEspecialidad());
         medico.setSexo(newMedicoInfoDTO.getSexo());
+        medico.setEdad(newMedicoInfoDTO.getEdad());
         if (StringUtils.hasText(newMedicoInfoDTO.getTelefono())) {
             medico.setTelefono(newMedicoInfoDTO.getTelefono());
         }

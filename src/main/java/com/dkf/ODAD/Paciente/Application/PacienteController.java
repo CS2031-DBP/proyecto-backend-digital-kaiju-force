@@ -8,6 +8,7 @@ import com.dkf.ODAD.Paciente.Service.PacienteService;
 import com.dkf.ODAD.Paciente.dto.NewPacienteInfoDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteResponseDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteSelfResponseDTO;
+import com.dkf.ODAD.Ubicacion.dto.UbicacionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -84,6 +85,13 @@ public class PacienteController {
     public ResponseEntity<String> updatePacienteInfo(@PathVariable Long id, @RequestBody NewPacienteInfoDTO pacienteInfoDTO) throws java.nio.file.AccessDeniedException {
         pacienteService.updatePacienteInfo(id, pacienteInfoDTO);
         return ResponseEntity.ok("Paciente info updated");
+    }
+
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+    @PatchMapping("/ubicacion")
+    public ResponseEntity<String> updateOrCreateUbicacion(@RequestBody UbicacionDTO ubicacionDTO) throws  AccessDeniedException {
+        pacienteService.updateOrCreateUbicacion(ubicacionDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

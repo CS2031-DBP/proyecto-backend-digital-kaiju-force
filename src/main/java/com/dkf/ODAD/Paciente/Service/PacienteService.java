@@ -8,6 +8,8 @@ import com.dkf.ODAD.Paciente.Infraestructure.PacienteRepository;
 import com.dkf.ODAD.Paciente.dto.NewPacienteInfoDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteResponseDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteSelfResponseDTO;
+import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
+import com.dkf.ODAD.Ubicacion.dto.UbicacionDTO;
 import com.dkf.ODAD.auth.AuthHelper;
 import com.dkf.ODAD.exceptions.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -104,6 +106,25 @@ public class PacienteService {
 
         paciente.setMedico(medico);
 
+        pacienteRepository.save(paciente);
+    }
+
+    public void updateOrCreateUbicacion(UbicacionDTO ubicacionDTO) {
+        String username = authHelper.getAuthenticatedUserEmail();
+        Paciente paciente = pacienteRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Paciente no encontrado!"));
+
+        Ubicacion ubicacion = paciente.getUbicacion();
+
+        if (ubicacion == null){
+            ubicacion = new Ubicacion();
+        }
+
+        ubicacion.setLatitud(ubicacionDTO.getLatitud());
+        ubicacion.setLongitud(ubicacionDTO.getLongitud());
+        ubicacion.setDireccion(ubicacionDTO.getDireccion());
+        ubicacion.setDescripcion(ubicacionDTO.getDescripcion());
+
+        paciente.setUbicacion(ubicacion);
         pacienteRepository.save(paciente);
     }
 

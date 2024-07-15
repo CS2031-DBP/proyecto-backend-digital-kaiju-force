@@ -1,5 +1,6 @@
 package com.dkf.ODAD.Paciente.dto;
 
+import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Size;
@@ -22,5 +23,5 @@ public class PacienteSelfResponseDTO {
     private Float avgRating;
     private int totalVisitas;
 
-
+    private Ubicacion ubicacion;
 }

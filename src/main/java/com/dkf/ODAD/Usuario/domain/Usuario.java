@@ -1,5 +1,6 @@
 package com.dkf.ODAD.Usuario.domain;
 
+import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,6 +46,10 @@ public class Usuario implements UserDetails {
 
     @Column(name = "updated_at")
     private ZonedDateTime updatedAt;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ubicacion_id")
+    private Ubicacion ubicacion;
 
     @Transient
     private String rolePrefix = "ROLE_";

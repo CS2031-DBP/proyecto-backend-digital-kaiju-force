@@ -1,5 +1,7 @@
 package com.dkf.ODAD.Ubicacion.Domain;
 
+import com.dkf.ODAD.Usuario.domain.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -22,4 +24,8 @@ public class Ubicacion {
 
     @Column
     private String descripcion;
+
+    @JsonIgnoreProperties("ubicacion")
+    @OneToOne(mappedBy = "ubicacion")
+    private Usuario user;
 }

@@ -1,6 +1,7 @@
 package com.dkf.ODAD.Medico.dto;
 
 import com.dkf.ODAD.Ruta.dto.RutaDTO;
+import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
 import com.dkf.ODAD.Visita.dto.VisitaResponseDTO;
 import jakarta.validation.Valid;
 import lombok.Data;
@@ -28,4 +29,6 @@ public class MedicoResponseDTO {
     private Integer totalVisitas;
 
     private Integer edad;
+
+    private Ubicacion ubicacion;
 }

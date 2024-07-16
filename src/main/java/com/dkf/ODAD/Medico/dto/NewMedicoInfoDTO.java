@@ -24,4 +24,6 @@ public class NewMedicoInfoDTO {
 
     private String sexo;
 
+    private Float precio;
+
 }

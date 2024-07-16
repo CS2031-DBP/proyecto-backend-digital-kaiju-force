@@ -31,4 +31,6 @@ public class MedicoResponseDTO {
     private Integer edad;
 
     private Ubicacion ubicacion;
+
+    private Float precio;
 }

@@ -47,7 +47,7 @@ public class StripeService {
                 .orElseThrow(() -> new Exception("Medico no encontrado"));
 
         PaymentIntentCreateParams paymentIntentParams = PaymentIntentCreateParams.builder()
-                .setAmount(medico.getPrecioInCents()) // Usar el precio del médico
+                .setAmount((long) Math.round(medico.getPrecio() * 100L)) // Usar el precio del médico
                 .setCurrency("PEN")
                 .setCustomer(customer.getId())
                 .build();

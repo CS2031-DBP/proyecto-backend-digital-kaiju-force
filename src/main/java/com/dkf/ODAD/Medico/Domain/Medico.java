@@ -44,7 +44,7 @@ public class Medico extends Usuario {
 
     // Agregar este método para convertir el precio a centavos
     public long getPrecioInCents() {
-        return Math.round(this.precio * 100L);
+        return Math.round(precio * 100L);
     }
 
 }

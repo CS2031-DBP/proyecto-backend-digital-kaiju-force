@@ -70,6 +70,7 @@ public class MedicoService {
         response.setAvgRating(medico.getAvgRating());
         response.setEspecialidad(medico.getEspecialidad());
         response.setEdad(medico.getEdad());
+        response.setPrecio(medico.getPrecio());
         response.setTotalVisitas(medico.getVisitas().size());
 
         return response;
@@ -113,6 +114,7 @@ public class MedicoService {
         medico.setEspecialidad(newMedicoInfoDTO.getEspecialidad());
         medico.setSexo(newMedicoInfoDTO.getSexo());
         medico.setEdad(newMedicoInfoDTO.getEdad());
+        medico.setPrecio(newMedicoInfoDTO.getPrecio());
         if (StringUtils.hasText(newMedicoInfoDTO.getTelefono())) {
             medico.setTelefono(newMedicoInfoDTO.getTelefono());
         }

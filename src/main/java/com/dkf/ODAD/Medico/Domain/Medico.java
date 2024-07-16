@@ -46,4 +46,5 @@ public class Medico extends Usuario {
     public long getPrecioInCents() {
         return Math.round(this.precio * 100L);
     }
+
 }

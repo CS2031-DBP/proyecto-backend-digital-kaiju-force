@@ -8,7 +8,9 @@ import com.dkf.ODAD.Paciente.Infraestructure.PacienteRepository;
 import com.dkf.ODAD.Paciente.dto.NewPacienteInfoDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteResponseDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteSelfResponseDTO;
+import com.dkf.ODAD.Tratamiento.Domain.Tratamiento;
 import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
+import com.dkf.ODAD.Ubicacion.Infraestructure.UbicacionRepository;
 import com.dkf.ODAD.Ubicacion.dto.UbicacionDTO;
 import com.dkf.ODAD.auth.AuthHelper;
 import com.dkf.ODAD.exceptions.ResourceNotFoundException;
@@ -27,13 +29,15 @@ public class PacienteService {
     private final AuthHelper authHelper;
     private final ModelMapper modelMapper;
     private final MedicoRepository medicoRepository;
+    private final UbicacionRepository ubicacionRepository;
 
     @Autowired
-    public PacienteService(PacienteRepository pacienteRepository, ModelMapper modelMapper, AuthHelper authHelper, MedicoRepository medicoRepository) {
+    public PacienteService(PacienteRepository pacienteRepository, ModelMapper modelMapper, AuthHelper authHelper, MedicoRepository medicoRepository, UbicacionRepository ubicacionRepository) {
         this.pacienteRepository = pacienteRepository;
         this.modelMapper = modelMapper;
         this.authHelper = authHelper;
         this.medicoRepository = medicoRepository;
+        this.ubicacionRepository = ubicacionRepository;
     }
 
     public List<Paciente> pacientes() {
@@ -153,6 +157,10 @@ public class PacienteService {
         paciente.setEdad(pacienteInfoDTO.getEdad());
         pacienteRepository.save(paciente);
 
+    }
+
+    public Ubicacion findByPacienteID(Long pacienteID) {
+        return ubicacionRepository.findByUser_Id(pacienteID);
     }
 
 }

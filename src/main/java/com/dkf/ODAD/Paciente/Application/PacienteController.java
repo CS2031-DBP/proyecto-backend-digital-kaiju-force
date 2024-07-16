@@ -8,6 +8,8 @@ import com.dkf.ODAD.Paciente.Service.PacienteService;
 import com.dkf.ODAD.Paciente.dto.NewPacienteInfoDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteResponseDTO;
 import com.dkf.ODAD.Paciente.dto.PacienteSelfResponseDTO;
+import com.dkf.ODAD.Tratamiento.Domain.Tratamiento;
+import com.dkf.ODAD.Ubicacion.Domain.Ubicacion;
 import com.dkf.ODAD.Ubicacion.dto.UbicacionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -94,4 +96,9 @@ public class PacienteController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/ubicacion/{id}")
+    public ResponseEntity<Ubicacion> getUbicacionPaciente(@PathVariable Long id) {
+        Ubicacion ubicacion = pacienteService.findByPacienteID(id);
+        return new ResponseEntity<>(ubicacion, HttpStatus.OK);
+    }
 }

@@ -28,7 +28,7 @@ public class Medico extends Usuario {
     private String especialidad;
 
     @Column
-    private float precio;
+    private Float precio;
 
     @JsonIgnoreProperties("medico")
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)

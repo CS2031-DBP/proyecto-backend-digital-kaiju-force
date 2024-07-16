@@ -41,10 +41,4 @@ public class Medico extends Usuario {
     @JsonIgnoreProperties("medico")
     @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Paciente> pacientes;
-
-    // Agregar este método para convertir el precio a centavos
-    public Long getPrecioInCents() {
-        return (long) Math.round(precio * 100L);
-    }
-
 }
